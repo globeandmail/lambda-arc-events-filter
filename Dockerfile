@@ -12,10 +12,10 @@ WORKDIR /app
 RUN pip install -r requirements.txt
 
 
-RUN ["cp", "tests/tsv2json_test.py", "tsv2json_test.py"]
+RUN ["cp", "test/arcfeed_cms_filtertest.py", "arcfeed_cms_filtertest.py"]
 
 #run unit tests
-RUN python tsv2json_test.py
+RUN python arcfeed_cms_filtertest.py
 
 
 #Check styling

@@ -13,8 +13,7 @@ services:
       - DATA_DIR=/tmp/localstack/data
       - DEFAULT_REGION=us-east-1
       - LAMBDA_EXECUTOR=docker
-      - LAMBDA_DOCKER_NETWORK=cmsfeedjob_my_network
-        #      - LAMBDA_REMOVE_CONTAINERS=false
+      - LAMBDA_DOCKER_NETWORK=lambda-arc-events-filter_my_network
     volumes:
       - '/tmp/localstack:/tmp/localstack'
       - '/var/run/docker.sock:/var/run/docker.sock'
@@ -32,13 +31,8 @@ services:
     command: >
       "
         sleep 10;
-        aws dynamodb create-table --endpoint-url=http://localstack:4569 --table-name test_table \
-          --attribute-definitions AttributeName=key,AttributeType=S \
-          --key-schema AttributeName=key,KeyType=HASH \
-          --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5;
         aws kinesis create-stream --endpoint-url=http://localstack:4568 --stream-name develop_cmsfeed --shard-count 1;
         aws kinesis create-stream --endpoint-url=http://localstack:4568 --stream-name filtered_cmsfeed --shard-count 1;
-        aws s3 mb s3://bucketsophi --endpoint-url=http://localstack:4572;
       "
     networks:
       - my_network

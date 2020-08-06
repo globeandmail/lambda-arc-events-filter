@@ -1,0 +1,762 @@
+{
+  "type": "content-operation",
+  "operation": "delete-story",
+  "date": "2020-07-24T02:04:36.445+00:00",
+  "date_ms": "2020-07-24T02:04:36.445+00:00",
+  "organization_id": "sandbox.tgam",
+  "id": "WRLJUVR5VFPDZKPQZPOXKRYC4Y",
+  "branch": "default",
+  "published": true,
+  "body": {
+    "type": "story",
+    "version": "0.10.5",
+    "content_elements": [
+      {
+        "_id": "AXY7ZIQK2JJXLF65CPNPFVNKNU",
+        "type": "image",
+        "version": "0.10.5",
+        "credits": {},
+        "width": 1280,
+        "caption": "Bill Bryan, head of science and technology at the Department of Homeland Security, speaks about the coronavirus in the James Brady Press Briefing Room of the White House, Thursday, April 23, 2020, in Washington. (AP Photo/Alex Brandon)",
+        "additional_properties": {
+          "source_url": "DCAB323-423_2020_220829.jpg"
+        },
+        "source": {
+          "name": "The Associated Press",
+          "source_id": "cp_nitf/World/DCAB323-423_2020_220829.jpg",
+          "source_type": "Wire",
+          "additional_properties": {
+            "editor": "photo center"
+          },
+          "system": "arc i/o"
+        },
+        "distributor": {
+          "reference_id": "9ca59671-bf16-4cbd-86f0-813fb60abb24",
+          "mode": "reference"
+        },
+        "url": "https://cloudfront-us-east-1.images.arcpublishing.com/sandbox.tgam/AXY7ZIQK2JJXLF65CPNPFVNKNU.jpg",
+        "height": 853
+      },
+      {
+        "_id": "HHBC7NBM5FDI5MQYQ5LCPSKAAU",
+        "type": "text",
+        "content": "WASHINGTON - The senior Department of Homeland Security official who was thrust into the spotlight by President Donald Trump to describe the effects of temperature on COVID-19 has been the subject of misconduct allegations for his previous government work."
+      },
+      {
+        "_id": "DHYORBB2YVCKVNY5U6PHXGLHV4",
+        "type": "text",
+        "content": "A Department of Energy Inspector General investigation was still pending Friday based on evidence submitted by a whistle-blower that William Bryan abused his government position with energy consulting work in Ukraine."
+      },
+      {
+        "_id": "JP4YBQV27RGRXM77IR7MGI6HQQ",
+        "type": "text",
+        "content": "It’s unclear if Trump was aware of that investigation when he called on Bryan at his daily briefing Thursday to explain DHS research that prompted a presidential riff on the potential to cure the virus with disinfectant and kill it with sunlight."
+      },
+      {
+        "_id": "QLBB5UMAHRHM5H7GQKAJGIESZ4",
+        "type": "text",
+        "content": "Bryan has been acting undersecretary for the DHS Science and Technology Directorate, since May 2017. Before that, he was president of ValueBridge International’s Energy Group, a consulting firm in Virginia, following previous work with the Department of Energy."
+      },
+      {
+        "_id": "GX47WHLZ5VCGLMZNIXWCWENXLM",
+        "type": "text",
+        "content": "Trump nominated him to be the undersecretary of the directorate, which is charged with developing technology for the components of DHS. But days after his Senate hearing in August, a government whistle-blower and his attorneys received a letter from the Office of the Special Counsel that information they provided about Bryan showed a “substantial likelihood of wrongdoing.”"
+      },
+      {
+        "_id": "YQ5SK23SCVCYNLGY4KGQSAXLAA",
+        "type": "text",
+        "content": "The letter, first reported by The Hill newspaper in September, said the Office of the Special Counsel, an independent federal investigative agency, had referred the matter to the Department of Energy Office of Inspector General, which opened an investigation."
+      },
+      {
+        "_id": "BDBZN467IJGNZAYOQZP5OTJ6FE",
+        "type": "text",
+        "content": "The letter, a copy of which was obtained by The Associated Press, said the IG would conduct an investigation to see if his allegations could be substantiated and would inform Congress and the president."
+      },
+      {
+        "_id": "LVMZPVGHNJCADNSC32GAZIL3TA",
+        "type": "text",
+        "content": "The allegations against Bryan, which were reported by The New York Times in October 2018, centre around his time as a senior adviser in the Office of International Affairs in 2016. He was designated a “special government employee,” which allowed him to do limited private sector work."
+      },
+      {
+        "_id": "R4WCFGGISVB55IXN6NNCCR2V4E",
+        "type": "text",
+        "content": "The whistle-blower, Robert Ivy, alleged that Bryan used his DOE position to develop his business interests with ValueBridge, including by providing money to foreign officials with the goal of influencing their actions and improperly sharing proprietary information."
+      },
+      {
+        "_id": "MWWNRNJUWVD5LKPK5VKIY4NOTE",
+        "type": "text",
+        "content": "The allegations reference players who featured prominently in special counsel Robert Mueller’s investigation into ties between Russia and the Trump campaign."
+      },
+      {
+        "_id": "H3HKZFJ6PJFNBFUH7ITOGX3YS4",
+        "type": "text",
+        "content": "The complaint, which was also obtained by AP, describes Bryan’s dealings with Rinat Akhmetov, the Ukrainian energy oligarch who hired Paul Manafort as an adviser years before Manafort became chairman of Trump’s presidential campaign. According to the complaint, Bryan denied ever interacting with Manafort, who was convicted in Mueller’s Russia investigation related to Manafort’s work in Ukraine — though they did stay at the same Hyatt Hotel in Kyiv on one occasion recounted by the whistle-blower."
+      },
+      {
+        "_id": "56RTI2NQARB5BIEJU365MRXMP4",
+        "type": "text",
+        "content": "It says Bryan, as the head of an Energy Department team that travelled to Ukraine with the goal of stabilizing the country’s energy security, aligned himself with Ahkmetov, became “ensnared in Ukraine’s high-stakes power rivalries” and cashed in “personally on the cowboy capitalism that has driven so much of the former Soviet Union.”"
+      },
+      {
+        "_id": "PVNS2OM4YZDLNMDF3RKKIZ6GAQ",
+        "type": "text",
+        "content": "Ivy, a former DOE official who now works in the private sector, and his attorney said Friday that they provided information to the IG investigation but have not received any notice of a conclusion. Both expressed surprise that Bryan, who has a military background but is not a scientist, was called upon by the Trump to discuss the research."
+      },
+      {
+        "_id": "B77RTLNGMZAVZDGPM3YXK2X6LA",
+        "type": "text",
+        "content": "“Bill Bryan should not be in that position in the first place,” said John Tye, Ivy’s attorney and the founder and CEO of Whistleblower Aid. “The U.S. government found a substantial likelihood of wrongdoing by him on both the corruption and security violation matters.”"
+      },
+      {
+        "_id": "57XGRRZC4ZDCLK24GAJQ53KIKU",
+        "type": "text",
+        "content": "The Department of Energy referred questions about the investigation, which remains open, to its Inspector General’s office, which did not respond to a request for information. DHS also did not respond to questions or make Bryan available for an interview."
+      },
+      {
+        "_id": "ME2HSVJFBZF4NHS4U2QFRZBIKA",
+        "type": "text",
+        "content": "Bryan presides over an organization that has had its budget cut by the Trump administration, despite the prominent role the president gave it during his briefing to discuss how work done at an agency lab in Maryland showed the virus breaking down when exposed to light and humidity."
+      },
+      {
+        "_id": "3OYETFO6EVDEVI5BBLORXC5URU",
+        "type": "text",
+        "content": "Under the final year of President Barack Obama, the agency had a budget of $841 million, more than half of which was for research and development. The Trump administration cut that to around $583 million in its first budget to fund other priorities. It proposed restoring some of that this year and raising it to $643 million."
+      },
+      {
+        "_id": "SRYTQX27KNCQLK5CX4IO4J3KHU",
+        "type": "text",
+        "content": "____"
+      },
+      {
+        "_id": "FMELS7NZCJA23GXUGEQVGXLYQ4",
+        "type": "text",
+        "content": "Associated Press writer Eric Tucker contributed to this report."
+      }
+    ],
+    "created_date": "2020-04-24T22:27:38.842Z",
+    "revision": {
+      "revision_id": "42ZWZBLLFZDELD7SSZNCO3YUVY",
+      "parent_id": "CJMFB3C4ERGRPPKOBBIQWJIVJU",
+      "editions": [
+        "default"
+      ],
+      "branch": "default",
+      "published": true
+    },
+    "last_updated_date": "2020-04-25T02:04:36.876Z",
+    "canonical_url": "/sb/world/article-senior-official-cited-by-trump-is-subject-of-investigation/",
+    "headlines": {
+      "basic": "Senior official cited by Trump is subject of investigation"
+    },
+    "owner": {
+      "name": "Wire Service",
+      "sponsored": false,
+      "id": "sandbox.tgam"
+    },
+    "content_restrictions": {
+      "content_code": "yellow"
+    },
+    "comments": {
+      "display_comments": true
+    },
+    "syndication": {
+      "external_distribution": true,
+      "search": true
+    },
+    "workflow": {
+      "status_code": 5
+    },
+    "subheadlines": {
+      "basic": "Senior official cited by Trump is subject of investigation"
+    },
+    "taxonomy": {
+      "sites": [
+        {
+          "_id": "/world",
+          "type": "site",
+          "version": "0.5.8",
+          "name": "World",
+          "path": "/world",
+          "parent_id": "/",
+          "additional_properties": {
+            "original": {
+              "_id": "/world",
+              "navigation": {
+                "nav_title": "World",
+                "nav_display": "true",
+                "nav_url": "/world"
+              },
+              "_admin": {
+                "alias_ids": [
+                  "/news/world",
+                  "/world"
+                ]
+              },
+              "metadata": {
+                "description": "The Globe and Mail's world coverage, providing information and analysis of breaking world news stories. Get the latest foreign news featuring analysis, galleries and videos.",
+                "keywords": "Globe and Mail world news,world news,international news,world report,global news,breaking world news,foreign news,foreign breaking news,current foreign news,world news video",
+                "meta_title": "World",
+                "content_code": "yellow",
+                "newskeywords": "Globe and Mail world news,world news,international news,world report,global news,breaking world news,foreign news,foreign breaking news,current foreign news,world news video"
+              },
+              "social": {
+                "facebook_app_id": "126045934076200",
+                "twitter_account": "globeandmail",
+                "twitter_account_id": "8736882",
+                "twitter_suggestions": []
+              },
+              "sitemap": {
+                "include_in_sitemap": "false"
+              },
+              "queries": {
+                "automated": "(taxonomy.sites.path%3A%5C%2Fworld%20OR%20taxonomy.sites.referent.id%3A%5C%2Fnews%5C%2Fworld*)"
+              },
+              "name": "World",
+              "order": 1010,
+              "inactive": false,
+              "parent": "/",
+              "ancestors": [
+                "/"
+              ],
+              "site": {
+                "pagebuilder_path_for_native_apps": "/world/"
+              },
+              "node_type": "section"
+            }
+          },
+          "primary": true
+        }
+      ],
+      "primary_site": {
+        "_id": "/world",
+        "type": "site",
+        "version": "0.5.8",
+        "name": "World",
+        "path": "/world",
+        "parent_id": "/",
+        "additional_properties": {
+          "original": {
+            "_id": "/world",
+            "navigation": {
+              "nav_title": "World",
+              "nav_display": "true",
+              "nav_url": "/world"
+            },
+            "_admin": {
+              "alias_ids": [
+                "/news/world",
+                "/world"
+              ]
+            },
+            "metadata": {
+              "description": "The Globe and Mail's world coverage, providing information and analysis of breaking world news stories. Get the latest foreign news featuring analysis, galleries and videos.",
+              "keywords": "Globe and Mail world news,world news,international news,world report,global news,breaking world news,foreign news,foreign breaking news,current foreign news,world news video",
+              "meta_title": "World",
+              "content_code": "yellow",
+              "newskeywords": "Globe and Mail world news,world news,international news,world report,global news,breaking world news,foreign news,foreign breaking news,current foreign news,world news video"
+            },
+            "social": {
+              "facebook_app_id": "126045934076200",
+              "twitter_account": "globeandmail",
+              "twitter_account_id": "8736882",
+              "twitter_suggestions": []
+            },
+            "sitemap": {
+              "include_in_sitemap": "false"
+            },
+            "queries": {
+              "automated": "(taxonomy.sites.path%3A%5C%2Fworld%20OR%20taxonomy.sites.referent.id%3A%5C%2Fnews%5C%2Fworld*)"
+            },
+            "name": "World",
+            "order": 1010,
+            "inactive": false,
+            "parent": "/",
+            "ancestors": [
+              "/"
+            ],
+            "site": {
+              "pagebuilder_path_for_native_apps": "/world/"
+            },
+            "node_type": "section"
+          }
+        },
+        "primary": true
+      },
+      "seo_keywords": [
+        "International",
+        "Politics"
+      ],
+      "keywords": [
+        {
+          "keyword": "bryan",
+          "score": 0.4791728034887966,
+          "tag": "proper_noun",
+          "frequency": 24
+        },
+        {
+          "keyword": "manafort",
+          "score": 0.4181090533562687,
+          "tag": "proper_noun",
+          "frequency": 7
+        },
+        {
+          "keyword": "department",
+          "score": 0.2269616349440448,
+          "tag": "proper_noun",
+          "frequency": 11
+        },
+        {
+          "keyword": "energy",
+          "score": 0.2198509367577137,
+          "tag": "proper_noun",
+          "frequency": 11
+        },
+        {
+          "keyword": "ukraine",
+          "score": 0.21663927141022082,
+          "tag": "proper_noun",
+          "frequency": 8
+        },
+        {
+          "keyword": "investigation",
+          "score": 0.21045192212757266,
+          "tag": "noun",
+          "frequency": 13
+        },
+        {
+          "keyword": "office",
+          "score": 0.18824388331947198,
+          "tag": "proper_noun",
+          "frequency": 9
+        },
+        {
+          "keyword": "trump",
+          "score": 0.18792568493815115,
+          "tag": "proper_noun",
+          "frequency": 12
+        },
+        {
+          "keyword": "budget",
+          "score": 0.16575246610519745,
+          "tag": "noun",
+          "frequency": 6
+        },
+        {
+          "keyword": "work",
+          "score": 0.1426583823632677,
+          "tag": "noun",
+          "frequency": 9
+        },
+        {
+          "keyword": "information",
+          "score": 0.13937454646794345,
+          "tag": "noun",
+          "frequency": 8
+        },
+        {
+          "keyword": "complaint",
+          "score": 0.1365254051775571,
+          "tag": "noun",
+          "frequency": 4
+        },
+        {
+          "keyword": "president",
+          "score": 0.13203341579808284,
+          "tag": "noun",
+          "frequency": 8
+        },
+        {
+          "keyword": "whistle-blower",
+          "score": 0.12521149428552808,
+          "tag": "noun",
+          "frequency": 7
+        },
+        {
+          "keyword": "Bryan",
+          "score": 0.11476492144043644,
+          "tag": "proper_noun",
+          "frequency": 11
+        },
+        {
+          "keyword": "letter",
+          "score": 0.10980272418397376,
+          "tag": "noun",
+          "frequency": 6
+        },
+        {
+          "keyword": "counsel",
+          "score": 0.08265001525245515,
+          "tag": "proper_noun",
+          "frequency": 5
+        },
+        {
+          "keyword": "agency",
+          "score": 0.07793970054946568,
+          "tag": "noun",
+          "frequency": 5
+        },
+        {
+          "keyword": "research",
+          "score": 0.07725028189518197,
+          "tag": "noun",
+          "frequency": 5
+        },
+        {
+          "keyword": "Manafort",
+          "score": 0.07679554041237587,
+          "tag": "proper_noun",
+          "frequency": 3
+        },
+        {
+          "keyword": "undersecretary",
+          "score": 0.07665332644864926,
+          "tag": "noun",
+          "frequency": 4
+        },
+        {
+          "keyword": "attorney",
+          "score": 0.07660175435191321,
+          "tag": "noun",
+          "frequency": 5
+        },
+        {
+          "keyword": "ivy",
+          "score": 0.0759064860848053,
+          "tag": "proper_noun",
+          "frequency": 5
+        },
+        {
+          "keyword": "virus",
+          "score": 0.07495861004757366,
+          "tag": "noun",
+          "frequency": 4
+        },
+        {
+          "keyword": "wrongdoing",
+          "score": 0.07106634930224624,
+          "tag": "noun",
+          "frequency": 4
+        }
+      ],
+      "topics": [
+        {
+          "_id": "534db7a2e4b0be4f5c38e7cd",
+          "name": "Defense and Cybersecurity",
+          "score": 0.5850788875458063,
+          "uid": "vn"
+        }
+      ],
+      "auxiliaries": [
+        {
+          "_id": "5877befdc9e77c0001a9a16e",
+          "name": "Congressional Budget",
+          "uid": "5ZV"
+        }
+      ],
+      "named_entities": [
+        {
+          "_id": "bryan",
+          "name": "Bryan",
+          "type": "person",
+          "score": 0.3601597225394737
+        },
+        {
+          "_id": "rinat-akhmetov",
+          "name": "Rinat Akhmetov",
+          "type": "person",
+          "score": 0.35303389780921063
+        },
+        {
+          "_id": "doe",
+          "name": "DOE",
+          "type": "organization",
+          "score": 0.3081886004145966
+        },
+        {
+          "_id": "department-of-energy",
+          "name": "Department of Energy",
+          "type": "organization",
+          "score": 0.2714482510638258
+        },
+        {
+          "_id": "hill",
+          "name": "Hill",
+          "type": "organization",
+          "score": 0.2666340428732375
+        },
+        {
+          "_id": "energy-department",
+          "name": "Energy Department",
+          "type": "organization",
+          "score": 0.23885019459380732
+        },
+        {
+          "_id": "eric-tucker",
+          "name": "Eric Tucker",
+          "type": "person",
+          "score": 0.23834035550136784
+        },
+        {
+          "_id": "dhs",
+          "name": "DHS",
+          "type": "organization",
+          "score": 0.21028972782079464
+        },
+        {
+          "_id": "department-of-homeland-security",
+          "name": "Department of Homeland Security",
+          "type": "organization",
+          "score": 0.18318362001688032
+        },
+        {
+          "_id": "soviet-union",
+          "name": "Soviet Union",
+          "type": "location",
+          "score": 0.18043787263379865
+        },
+        {
+          "_id": "paul-manafort",
+          "name": "Paul Manafort",
+          "type": "person",
+          "score": 0.17844779686405485
+        },
+        {
+          "_id": "robert-mueller",
+          "name": "Robert Mueller",
+          "type": "person",
+          "score": 0.17188111984274093
+        },
+        {
+          "_id": "ukraine",
+          "name": "Ukraine",
+          "type": "location",
+          "score": 0.16609777812895532
+        },
+        {
+          "_id": "ap",
+          "name": "AP",
+          "type": "organization",
+          "score": 0.12821027211365654
+        },
+        {
+          "_id": "new-york-times",
+          "name": "New York Times",
+          "type": "organization",
+          "score": 0.12468230998172534
+        },
+        {
+          "_id": "barack-obama",
+          "name": "Barack Obama",
+          "type": "person",
+          "score": 0.11808753014884064
+        },
+        {
+          "_id": "maryland",
+          "name": "Maryland",
+          "type": "location",
+          "score": 0.11246073348926236
+        },
+        {
+          "_id": "virginia",
+          "name": "Virginia",
+          "type": "location",
+          "score": 0.10804521517094463
+        },
+        {
+          "_id": "russia",
+          "name": "Russia",
+          "type": "location",
+          "score": 0.09574356412489445
+        },
+        {
+          "_id": "senate",
+          "name": "Senate",
+          "type": "organization",
+          "score": 0.09558517151633243
+        },
+        {
+          "_id": "congress",
+          "name": "Congress",
+          "type": "organization",
+          "score": 0.08911367673808619
+        },
+        {
+          "_id": "donald-trump",
+          "name": "Donald Trump",
+          "type": "person",
+          "score": 0.08399722587713795
+        },
+        {
+          "_id": "office-of-the-special-counsel",
+          "name": "Office of the Special Counsel",
+          "type": "organization",
+          "score": 0.08158797100752481
+        },
+        {
+          "_id": "kyiv",
+          "name": "Kyiv",
+          "type": "location",
+          "score": 0.08158797100752481
+        },
+        {
+          "_id": "ahkmetov",
+          "name": "Ahkmetov",
+          "type": "person",
+          "score": 0.08158797100752481
+        },
+        {
+          "_id": "william-bryan",
+          "name": "William Bryan",
+          "type": "person",
+          "score": 0.08158797100752481
+        },
+        {
+          "_id": "hyatt-hotel",
+          "name": "Hyatt Hotel",
+          "type": "location",
+          "score": 0.08158797100752481
+        },
+        {
+          "_id": "john-tye",
+          "name": "John Tye",
+          "type": "person",
+          "score": 0.08158797100752481
+        },
+        {
+          "_id": "department-of-energy-office-of-inspector-general",
+          "name": "Department of Energy Office of Inspector General",
+          "type": "organization",
+          "score": 0.08158797100752481
+        },
+        {
+          "_id": "office-of-international-affairs",
+          "name": "Office of International Affairs",
+          "type": "organization",
+          "score": 0.08158797100752481
+        },
+        {
+          "_id": "dhs-science-and-technology-directorate",
+          "name": "DHS Science and Technology Directorate",
+          "type": "organization",
+          "score": 0.08158797100752481
+        },
+        {
+          "_id": "bill-bryan",
+          "name": "Bill Bryan",
+          "type": "person",
+          "score": 0.08158797100752481
+        },
+        {
+          "_id": "robert-ivy",
+          "name": "Robert Ivy",
+          "type": "person",
+          "score": 0.08158797100752481
+        },
+        {
+          "_id": "valuebridge-international-s-energy-group",
+          "name": "ValueBridge International 's Energy Group",
+          "type": "organization",
+          "score": 0.08158797100752481
+        },
+        {
+          "_id": "donald-trump",
+          "name": "Trump",
+          "type": "organization",
+          "score": 0.077736491380781
+        },
+        {
+          "_id": "u-s-",
+          "name": "U.S.",
+          "type": "location",
+          "score": 0.053483578371364325
+        },
+        {
+          "_id": "associated-press",
+          "name": "Associated Press",
+          "type": "organization",
+          "score": 0.019880188041567617
+        }
+      ]
+    },
+    "source": {
+      "system": "arc i/o",
+      "source_type": "wires",
+      "source_id": "2e3b6a20fd18cd3ef66db07aa370e719",
+      "name": "The Associated Press"
+    },
+    "promo_items": {
+      "basic": {
+        "_id": "AXY7ZIQK2JJXLF65CPNPFVNKNU",
+        "additional_properties": {
+          "source_url": "DCAB323-423_2020_220829.jpg"
+        },
+        "caption": "Bill Bryan, head of science and technology at the Department of Homeland Security, speaks about the coronavirus in the James Brady Press Briefing Room of the White House, Thursday, April 23, 2020, in Washington. (AP Photo/Alex Brandon)",
+        "height": 853,
+        "type": "image",
+        "url": "https://cloudfront-us-east-1.images.arcpublishing.com/sandbox.tgam/AXY7ZIQK2JJXLF65CPNPFVNKNU.jpg",
+        "version": "0.10.5",
+        "width": 1280,
+        "credits": {},
+        "source": {
+          "name": "The Associated Press",
+          "source_id": "cp_nitf/World/DCAB323-423_2020_220829.jpg",
+          "source_type": "Wire",
+          "additional_properties": {
+            "editor": "photo center"
+          },
+          "system": "arc i/o"
+        },
+        "distributor": {
+          "reference_id": "9ca59671-bf16-4cbd-86f0-813fb60abb24",
+          "mode": "reference"
+        }
+      }
+    },
+    "distributor": {
+      "reference_id": "9ca59671-bf16-4cbd-86f0-813fb60abb24",
+      "mode": "reference"
+    },
+    "tracking": {
+      "in_url_headline": "article-senior-official-cited-by-trump-is-subject-of-investigation"
+    },
+    "planning": {
+      "internal_note": "BEGIN CP NOTE ----- US-Virus-Outbreak-DHS-Bryan -- 20200424T220256-0400 UPDATES: Adds new quote from complaint in 12th paragraph beginning, double quotation markIt says Bryan...double quotation markdouble quotation mark With AP Photos. ------ END CP NOTE /// ",
+      "scheduling": {
+        "planned_publish_date": "2020-04-25T02:04:36Z"
+      }
+    },
+    "display_date": "2020-04-24T22:27:38.879Z",
+    "credits": {
+      "by": [
+        {
+          "type": "author",
+          "name": "Ben Fox",
+          "org": "The Associated Press"
+        }
+      ]
+    },
+    "subtype": "wire",
+    "first_publish_date": "2020-04-24T22:27:38.879Z",
+    "location": "Washington, District of Columbia, United States",
+    "additional_properties": {
+      "word_count": 788,
+      "file_name": "cp_nitf/World/p25867.xml",
+      "has_published_copy": true
+    },
+    "publish_date": "2020-04-25T02:04:36.898Z",
+    "slug": "",
+    "publishing": {
+      "scheduled_operations": {
+        "publish_edition": [],
+        "unpublish_edition": [
+          {
+            "operation_date": "2020-07-24T02:04:36.000Z",
+            "operation": "unpublish_edition",
+            "type": "story_operation"
+          }
+        ]
+      }
+    },
+    "_id": "WRLJUVR5VFPDZKPQZPOXKRYC4Y"
+  }
+}
