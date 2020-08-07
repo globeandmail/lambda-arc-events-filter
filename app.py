@@ -20,27 +20,28 @@ if environ.get('LOG_LEVEL') is not None:
 else:
     logger.setLevel(logging.DEBUG)
 
+kinesis_endpoint_url = environ.get('KINESIS_ENDPOINT_URL')
+aws_access_key_id = environ.get('AWS_ACCESS_KEY_ID')
+aws_secret_access_key = environ.get('AWS_SECRET_ACCESS_KEY')
+aws_region = environ.get('AWS_REGION')
+to_filter_parameters = environ.get('TO_FILTER_PARAMETERS')
+
 
 # function to create a client with aws for a specific service and region
-def create_client(service, region):
+def create_client(service):
     return boto3.client(
         service,
-        endpoint_url='http://172.22.0.2:4568',
-        aws_access_key_id='dummy',
-        aws_secret_access_key='dummy',
-        region_name=region)
+        endpoint_url=kinesis_endpoint_url,
+        aws_access_key_id=aws_access_key_id,
+        aws_secret_access_key=aws_secret_access_key,
+        region_name=aws_region)
 
 
 # function for sending data to Kinesis at the absolute maximum throughput
-def send_kinesis(kinesis_client, kinesis_stream_name, kinesis_shard_count, kinesisRecord):
-    kinesisRecords = []  # empty list to store data
-    currentBytes = 0  # counter for bytes
-    rowCount = 0  # as we start with the first
-    sendKinesis = False  # flag to update when it's time to send data
-    shardCount = 1  # shard counter
-    kinesisRecords.append(kinesisRecord)  # add the object to the list
+def send_kinesis(kinesis_client, kinesis_stream_name, kinesis_record):
+    kinesisRecords = [kinesis_record]
     # put the records to kinesis
-    response = kinesis_client.put_records(
+    kinesis_client.put_records(
         Records=kinesisRecords,
         StreamName=kinesis_stream_name
     )
@@ -48,14 +49,23 @@ def send_kinesis(kinesis_client, kinesis_stream_name, kinesis_shard_count, kines
 
 def parse_kinesis_record(record):
     try:
-        logger.debug('Processing record {}'.format(record["kinesis"]["data"]))
         cms_event_json: str = base64.b64decode(record["kinesis"]["data"]).decode('utf-8')
-        logger.info("Decoded event with eventId {}".format(record['eventID']))
+        #logger.info("Decoded event {} with eventId {}".format(cms_event_json, record['eventID']))
         return cms_event_json
     except KeyError as ex:
         logger.error("Error: Key not found {}".format(ex))
     except TypeError as ex:
         logger.error("Type Error: {}".format(ex))
+
+
+def filter_event(record, filter_parameter):
+    try:
+        for element in filter_parameter:
+            print(element)
+            record.pop(element, None)
+        return record
+    except TypeError as ex:
+        logger.error("Error: {}".format(ex))
 
 
 """
@@ -74,7 +84,7 @@ def execute(event, context):
     succeeded_record_count = 0
     failed_record_count = 0
     # create a client with kinesis
-    kinesis = create_client('kinesis', 'us-east-1')
+    kinesis = create_client('kinesis')
     # Output data stream
     output_stream_name = "filtered_cmsfeed"
     stream_shard_count = 1
@@ -86,18 +96,18 @@ def execute(event, context):
 
     logger.info('Total events received: {}'.format(len(event['Records'])))
     for record in event['Records']:
-        print(record)
         cms_event_json = parse_kinesis_record(record)
         try:
             logger.debug('Transforming the decoded event with partitionKey {} '
                          'to json'.format(record["kinesis"]['partitionKey']))
             event_data = json.loads(cms_event_json)
             if event_data['published']:
+                filtered_event = filter_event(event_data, to_filter_parameters)
                 output_record = {
                     'PartitionKey': record["kinesis"]['partitionKey'],
-                    'Data': base64.b64encode(json.dumps(event_data).encode('utf-8'))
+                    'Data': base64.b64encode(json.dumps(filtered_event).encode('utf-8'))
                 }
-                send_kinesis(kinesis, output_stream_name, stream_shard_count, output_record)
+                send_kinesis(kinesis, output_stream_name, output_record)
 
                 succeeded_record_count += 1
                 logger.info('Successfully send the decoded event with partitionKey {}'
