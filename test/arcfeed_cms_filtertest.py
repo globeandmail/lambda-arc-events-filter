@@ -70,7 +70,12 @@ class UnitTests(unittest.TestCase):
         for element in to_filter_parameter:
             values = element.split('.')
             if len(values) > 1:
-                del rec[values[0]][values[1]][values[2]]
+                expr = 'del rec'
+                for element_name in values:
+                    expr = expr + '[\'' + element_name + '\']'
+                print(expr)
+                code = compile(expr,'delete_record', 'exec')
+                eval(code)
             else:
                 del rec[values[0]]
         print("after: " + str(rec))
