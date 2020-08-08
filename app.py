@@ -1,10 +1,11 @@
-import boto3
 import base64
 import json
 import logging
+import os
 import sys
+
+import boto3
 from chalice import Chalice
-from os import environ
 
 app_name = 'CMSFilterApp'
 
@@ -15,16 +16,18 @@ logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(level
 logger = logging.getLogger(app_name)
 
 # Set the log level from Environment variable LOG_LEVEL
-if environ.get('LOG_LEVEL') is not None:
-    logger.setLevel(environ.get('LOG_LEVEL'))
-else:
+if os.environ.get('LOG_LEVEL') is None:
     logger.setLevel(logging.DEBUG)
+else:
+    logger.setLevel(os.environ['LOG_LEVEL'])
 
-kinesis_endpoint_url = environ.get('KINESIS_ENDPOINT_URL')
-aws_access_key_id = environ.get('AWS_ACCESS_KEY_ID')
-aws_secret_access_key = environ.get('AWS_SECRET_ACCESS_KEY')
-aws_region = environ.get('AWS_REGION')
-to_filter_parameters = environ.get('TO_FILTER_PARAMETERS')
+kinesis_endpoint_url = os.environ.get('KINESIS_ENDPOINT_URL')
+aws_access_key_id = os.environ.get('AWS_ACCESS_KEY_ID')
+aws_secret_access_key = os.environ.get('AWS_SECRET_ACCESS_KEY')
+aws_region = os.environ.get('AWS_REGION')
+to_filter_parameters = os.environ.get('TO_FILTER_PARAMETERS')
+output_stream_name = os.environ.get('OUTPUT_STREAM')
+logger.debug('##Environment variables {}'.format(os.environ))
 
 
 # function to create a client with aws for a specific service and region
@@ -49,9 +52,8 @@ def send_kinesis(kinesis_client, kinesis_stream_name, kinesis_record):
 
 def parse_kinesis_record(record):
     try:
-        cms_event_json: str = base64.b64decode(record["kinesis"]["data"]).decode('utf-8')
-        #logger.info("Decoded event {} with eventId {}".format(cms_event_json, record['eventID']))
-        return cms_event_json
+        logger.info("Decoded event with eventId {}".format(record['eventID']))
+        return base64.b64decode(record["kinesis"]["data"]).decode('utf-8')
     except KeyError as ex:
         logger.error("Error: Key not found {}".format(ex))
     except TypeError as ex:
@@ -61,8 +63,15 @@ def parse_kinesis_record(record):
 def filter_event(record, filter_parameter):
     try:
         for element in filter_parameter:
-            print(element)
-            record.pop(element, None)
+            values = element.split('.')
+            if len(values) > 1:
+                expr = 'del record'
+                for element_name in values:
+                    expr = expr + '[\'' + element_name + '\']'
+                code = compile(expr, 'delete_record', 'exec')
+                eval(code)
+            else:
+                del record[values[0]]
         return record
     except TypeError as ex:
         logger.error("Error: {}".format(ex))
@@ -76,18 +85,13 @@ This method filter the published records in CMSEvent Kinesis Queue.
 """
 
 
-@app.route('/')
+@app.lambda_function()
 def execute(event, context):
-    global cms_event_json
-    logger.debug('##Environment variables {}'.format(environ))
     output = []
     succeeded_record_count = 0
     failed_record_count = 0
     # create a client with kinesis
     kinesis = create_client('kinesis')
-    # Output data stream
-    output_stream_name = "filtered_cmsfeed"
-    stream_shard_count = 1
 
     # if records are not present exit
     if "Records" not in event:
@@ -96,13 +100,14 @@ def execute(event, context):
 
     logger.info('Total events received: {}'.format(len(event['Records'])))
     for record in event['Records']:
-        cms_event_json = parse_kinesis_record(record)
+        cms_event_json: str = parse_kinesis_record(record)
         try:
-            logger.debug('Transforming the decoded event with partitionKey {} '
-                         'to json'.format(record["kinesis"]['partitionKey']))
-            event_data = json.loads(cms_event_json)
+            logger.info('Transforming the decoded event with partitionKey {} '
+                        'to json'.format(record["kinesis"]['partitionKey']))
+            event_data: object = json.loads(cms_event_json)
+            logger.debug("got the event {}".format(event_data))
             if event_data['published']:
-                filtered_event = filter_event(event_data, to_filter_parameters)
+                filtered_event = filter_event(event_data, to_filter_parameters.split(","))
                 output_record = {
                     'PartitionKey': record["kinesis"]['partitionKey'],
                     'Data': base64.b64encode(json.dumps(filtered_event).encode('utf-8'))
@@ -115,15 +120,9 @@ def execute(event, context):
         except ValueError as ex:
             logger.error("Error: Json decoding failed {}".format(ex))
         except Exception as e:
-            for error_message in e.error_messages:
-                output_record = {
-                    'partitionKey': record['partitionKey'],
-                    'result': 'ProcessingFailed',
-                    'data': record["data"]
-                }
-                failed_record_count += 1
-                logger.warning("Failed to transform event partitionKey {}. Error: {}".format(record['partitionKey'],
-                                                                                             error_message))
+            failed_record_count += 1
+            logger.warning("Failed to transform event partitionKey {}. Error: {}".format(record['partitionKey'],
+                                                                                         e.message))
     logger.info('Successful processed {} out of records {}, Transformed={}, errors={}'
                 .format(len(output), len(event['Records']),
                         succeeded_record_count, failed_record_count))

@@ -5,7 +5,6 @@ jmespath==0.10.0
 python-dateutil==2.8.1
 s3transfer==0.3.3
 six==1.15.0
-snowplow-analytics-sdk==0.2.3
 urllib3==1.25.9
 flake8==3.8.3
 chalice==1.14.1
