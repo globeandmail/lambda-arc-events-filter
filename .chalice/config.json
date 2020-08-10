@@ -6,11 +6,11 @@
       "api_gateway_stage": "api",
       "environment_variables": {
         "OUTPUT_STREAM": "filtered_cmsfeed",
-        "KINESIS_ENDPOINT_URL": "http://172.20.0.2:4568",
-        "AWS_ACCESS_KEY_ID": "dummy",
-        "AWS_SECRET_ACCESS_KEY": "dummy",
+        "KINESIS_ENDPOINT_URL": "https://kinesis.us-east-1.amazonaws.com",
+        "AWS_ACCESS_KEY_ID": "iam",
+        "AWS_SECRET_ACCESS_KEY": "iam",
         "AWS_REGION": "us-east-1",
-        "TO_FILTER_PARAMETERS": "operation, body.type",
+        "TO_FILTER_PARAMETERS": "operation",
         "LOG_LEVEL" : "DEBUG"
       }
     }

@@ -3,8 +3,8 @@ import json
 import logging
 import os
 import sys
-
 import boto3
+
 from chalice import Chalice
 
 app_name = 'CMSFilterApp'
@@ -22,12 +22,14 @@ else:
     logger.setLevel(os.environ['LOG_LEVEL'])
 
 kinesis_endpoint_url = os.environ.get('KINESIS_ENDPOINT_URL')
-aws_access_key_id = os.environ.get('AWS_ACCESS_KEY_ID')
-aws_secret_access_key = os.environ.get('AWS_SECRET_ACCESS_KEY')
-aws_region = os.environ.get('AWS_REGION')
-to_filter_parameters = os.environ.get('TO_FILTER_PARAMETERS')
+aws_access_key_id = os.environ.get('AWS_ACCESS_KEY_ID', 'iam')
+aws_secret_access_key = os.environ.get('AWS_SECRET_ACCESS_KEY', 'iam')
+aws_region = os.environ.get('AWS_REGION', 'us-east-1')
 output_stream_name = os.environ.get('OUTPUT_STREAM')
 logger.debug('##Environment variables {}'.format(os.environ))
+
+if os.environ['OUTPUT_STREAM'] is None:
+    raise KeyError('Output stream is required before running the lambda!!')
 
 
 # function to create a client with aws for a specific service and region
@@ -87,9 +89,11 @@ This method filter the published records in CMSEvent Kinesis Queue.
 
 @app.lambda_function()
 def execute(event, context):
-    output = []
+    # parameters to filter the stream, by default empty
+    to_filter_parameters = os.environ.get('TO_FILTER_PARAMETERS', '')
     succeeded_record_count = 0
     failed_record_count = 0
+    skipped_record_count = 0
     # create a client with kinesis
     kinesis = create_client('kinesis')
 
@@ -104,9 +108,12 @@ def execute(event, context):
         try:
             logger.info('Transforming the decoded event with partitionKey {} '
                         'to json'.format(record["kinesis"]['partitionKey']))
-            event_data: object = json.loads(cms_event_json)
-            logger.debug("got the event {}".format(event_data))
-            if event_data['published']:
+            event_data = json.loads(cms_event_json)
+            event_published_status = event_data['published']
+            logger.debug("event received with status PUBLISHED = {}. Event will be filtered is published=false"
+                         .format(event_published_status))
+            if event_published_status == bool('true'):
+                logger.debug("filtering the event by omitting parameter/'s' - {}".format(to_filter_parameters))
                 filtered_event = filter_event(event_data, to_filter_parameters.split(","))
                 output_record = {
                     'PartitionKey': record["kinesis"]['partitionKey'],
@@ -117,13 +124,15 @@ def execute(event, context):
                 succeeded_record_count += 1
                 logger.info('Successfully send the decoded event with partitionKey {}'
                             .format(record["kinesis"]['partitionKey']))
+            else:
+                skipped_record_count +=1
         except ValueError as ex:
             logger.error("Error: Json decoding failed {}".format(ex))
         except Exception as e:
             failed_record_count += 1
-            logger.warning("Failed to transform event partitionKey {}. Error: {}".format(record['partitionKey'],
-                                                                                         e.message))
-    logger.info('Successful processed {} out of records {}, Transformed={}, errors={}'
-                .format(len(output), len(event['Records']),
-                        succeeded_record_count, failed_record_count))
-    return {'records': output}
+            logger.error(
+                "Failed to transform event partitionKey {}. Error: {}".format(record["kinesis"]['partitionKey'],
+                                                                              e))
+    logger.info('Successful processed {} records , Transformed={}, errors={}, skipped={}'
+                .format(len(event['Records']),
+                        succeeded_record_count, failed_record_count, skipped_record_count))

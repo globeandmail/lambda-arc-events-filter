@@ -29,12 +29,18 @@ source dev_env/bin/activate
 
 5)Create the lambda function
 ```
-awslocal lambda create-function --function-name cmsFilterFunction --runtime python3.7 --role admin --handler app.execute --zip-file fileb://deployment.zip
+awslocal lambda create-function --function-name cmsFilterFunction --runtime python3.8 --role admin --handler app.execute --zip-file fileb://deployment.zip
 
 awslocal lambda create-event-source-mapping --function-name cmsFilterFunction \
 --event-source  arn:aws:kinesis:us-east-1:000000000000:stream/develop_cmsfeed \
 --batch-size 1 --starting-position EARLIEST
 
+awslocal lambda update-function-configuration --function-name cmsFilterFunction \
+--environment "Variables={TO_FILTER_PARAMETERS=operation, KINESIS_ENDPOINT_URL='http://172.21.0.2:4568', OUTPUT_STREAM=filtered_cmsfeed}"
+```
+
+if any code is changed - 
+```
 awslocal lambda update-function-code --function-name cmsFilterFunction --zip-file fileb://deployment.zip
 ```
 
