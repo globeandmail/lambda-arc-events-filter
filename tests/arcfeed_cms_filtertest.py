@@ -1,12 +1,12 @@
 import json
 import unittest
 
-from app import parse_kinesis_record, filter_event
+from app import decode_record, filter_event
 
 # the test data file contains AWS Kinesis stream event
-validDataFile = './resources/arcfeed_kinesis_message.json'
-invalidDataFile = './resources/arcfeed_kinesis_invalid_message.json'
-app_name = 'lambda-arcfeed-cms-filter'
+validDataFile = 'tests/resources/arcfeed_kinesis_message.json'
+invalidDataFile = 'tests/resources/arcfeed_kinesis_invalid_message.json'
+app_name = 'lambda-arcfeed-events-filter'
 
 
 class UnitTests(unittest.TestCase):
@@ -23,19 +23,19 @@ class UnitTests(unittest.TestCase):
             self.invalidRecord = json.load(json_file)
 
     def test_validRecord(self):
-        output: str = parse_kinesis_record(self.validRecord)
+        output: str = decode_record(self.validRecord)
         event_data: object = json.loads(output)
         is_published: object = event_data['published']
         self.assertTrue(is_published)
 
     def test_invalidRecord(self):
-        output: str = parse_kinesis_record(self.invalidRecord)
+        output: str = decode_record(self.invalidRecord)
         event_data: object = json.loads(output)
         is_published = event_data['published']
         self.assertNotEqual(is_published, bool('true'))
 
     def test_filterFunction(self):
-        output = parse_kinesis_record(self.validRecord)
+        output = decode_record(self.validRecord)
         record = json.loads(output)
         to_filter_parameter = ["operation","type"]
         filtered_event = filter_event(record, to_filter_parameter)
@@ -44,7 +44,7 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(raises.exception.__doc__, "Mapping key not found.")
 
     def test_filterFunction_withNestedJsonObject(self):
-        output = parse_kinesis_record(self.validRecord)
+        output = decode_record(self.validRecord)
         record = json.loads(output)
         to_filter_parameter = ["body.credits.by"]
         filtered_event = filter_event(record, to_filter_parameter)
@@ -53,7 +53,7 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(raises.exception.__doc__, "Mapping key not found.")
 
     def test_filterFunction_whenNoParameterPassed(self):
-        output = parse_kinesis_record(self.validRecord)
+        output = decode_record(self.validRecord)
         record = json.loads(output)
         to_filter_parameter = []
         filtered_event = filter_event(record, to_filter_parameter)

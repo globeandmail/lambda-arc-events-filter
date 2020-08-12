@@ -7,7 +7,7 @@ import boto3
 
 from chalice import Chalice
 
-app_name = 'CMSFilterApp'
+app_name = 'FilterArcEventsApp'
 
 app = Chalice(app_name=app_name)
 
@@ -15,21 +15,15 @@ app = Chalice(app_name=app_name)
 logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(app_name)
 
-# Set the log level from Environment variable LOG_LEVEL
-if os.environ.get('LOG_LEVEL') is None:
-    logger.setLevel(logging.DEBUG)
-else:
-    logger.setLevel(os.environ['LOG_LEVEL'])
+# Set the log level from Environment variable LOG_LEVEL, by default INFO
+logger.setLevel(os.environ.get('LOG_LEVEL', logging.INFO))
 
-kinesis_endpoint_url = os.environ.get('KINESIS_ENDPOINT_URL')
+kinesis_endpoint_url = os.environ.get('KINESIS_ENDPOINT_URL', 'https://kinesis.us-east-1.amazonaws.com')
 aws_access_key_id = os.environ.get('AWS_ACCESS_KEY_ID', 'iam')
 aws_secret_access_key = os.environ.get('AWS_SECRET_ACCESS_KEY', 'iam')
 aws_region = os.environ.get('AWS_REGION', 'us-east-1')
 output_stream_name = os.environ.get('OUTPUT_STREAM')
 logger.debug('##Environment variables {}'.format(os.environ))
-
-if os.environ['OUTPUT_STREAM'] is None:
-    raise KeyError('Output stream is required before running the lambda!!')
 
 
 # function to create a client with aws for a specific service and region
@@ -52,20 +46,25 @@ def send_kinesis(kinesis_client, kinesis_stream_name, kinesis_record):
     )
 
 
-def parse_kinesis_record(record):
+def decode_record(record):
     try:
         logger.info("Decoded event with eventId {}".format(record['eventID']))
         return base64.b64decode(record["kinesis"]["data"]).decode('utf-8')
-    except KeyError as ex:
-        logger.error("Error: Key not found {}".format(ex))
     except TypeError as ex:
         logger.error("Type Error: {}".format(ex))
 
 
-def filter_event(record, filter_parameter):
+def filter_event(record, filters):
+    """
+    A Generic method that removes the provided parameter from the given json record.
+    :param record: Kinesis record in json representation
+    :param filters: parameter in events that are required to be removed
+    :return: filtered json record
+    """
     try:
-        for element in filter_parameter:
-            values = element.split('.')
+        for filter in filters:
+            # splitting with '.' as we can have nested parameters that needs to be filtered, like body.type
+            values = filter.split('.')
             if len(values) > 1:
                 expr = 'del record'
                 for element_name in values:
@@ -73,6 +72,7 @@ def filter_event(record, filter_parameter):
                 code = compile(expr, 'delete_record', 'exec')
                 eval(code)
             else:
+                # if only one filter parameter present then just fetch that and delete it
                 del record[values[0]]
         return record
     except TypeError as ex:
@@ -99,12 +99,12 @@ def execute(event, context):
 
     # if records are not present exit
     if "Records" not in event:
-        logger.warning("Records not found in the arc cms event stream. Terminating the function")
+        logger.error("Not able to get records from arc cms event stream. Terminating the function")
         sys.exit(1)
 
     logger.info('Total events received: {}'.format(len(event['Records'])))
     for record in event['Records']:
-        cms_event_json: str = parse_kinesis_record(record)
+        cms_event_json = decode_record(record)
         try:
             logger.info('Transforming the decoded event with partitionKey {} '
                         'to json'.format(record["kinesis"]['partitionKey']))
@@ -125,7 +125,7 @@ def execute(event, context):
                 logger.info('Successfully send the decoded event with partitionKey {}'
                             .format(record["kinesis"]['partitionKey']))
             else:
-                skipped_record_count +=1
+                skipped_record_count += 1
         except ValueError as ex:
             logger.error("Error: Json decoding failed {}".format(ex))
         except Exception as e:
