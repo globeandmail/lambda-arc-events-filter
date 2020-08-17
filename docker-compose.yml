@@ -33,6 +33,7 @@ services:
         sleep 10;
         aws kinesis create-stream --endpoint-url=http://localstack:4568 --stream-name develop_cmsfeed --shard-count 1;
         aws kinesis create-stream --endpoint-url=http://localstack:4568 --stream-name filtered_cmsfeed --shard-count 1;
+        aws kinesis create-stream --endpoint-url=http://localstack:4568 --stream-name error_cmsfeed --shard-count 1;
       "
     networks:
       - my_network

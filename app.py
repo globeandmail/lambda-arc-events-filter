@@ -23,6 +23,9 @@ aws_secret_access_key = os.environ.get("AWS_SECRET_ACCESS_KEY")
 
 # output stream where filtered events are streamed
 output_stream_name = os.environ.get("OUTPUT_STREAM")
+
+# Error stream where faulty events are streamed
+error_stream_name = os.environ.get("ERROR_STREAM")
 app.log.debug("### Environment variables {}".format(os.environ))
 
 
@@ -134,21 +137,34 @@ def execute(event, context):
 
                 succeeded_record_count += 1
                 app.log.info(
-                    "Successfully send the decoded event with partitionKey {}".format(
-                        record["kinesis"]["partitionKey"]
+                    "Successfully send the decoded event with partitionKey {} to stream {}".format(
+                        record["kinesis"]["partitionKey"], output_stream_name
                     )
                 )
             else:
                 skipped_record_count += 1
         except ValueError as ex:
-            app.log.error("Error: Json decoding failed {}".format(ex))
+            app.log.error("Error: Json decoding failed {}. Sending event to error stream named {}".
+                          format(ex, error_stream_name))
+            # send to Kinesis error stream
+            error_record = {
+                "PartitionKey": record["kinesis"]["partitionKey"],
+                "Data":  record["kinesis"]["data"],
+            }
+            send_kinesis(kinesis, error_stream_name, error_record)
         except Exception as e:
             failed_record_count += 1
             app.log.error(
-                "Failed to transform event having partitionKey {}. Error: {}".format(
-                    record["kinesis"]["partitionKey"], e
+                "Failed to transform event having partitionKey {}. Error: {} Sending event to error stream - {}".format(
+                    record["kinesis"]["partitionKey"], e, error_stream_name
                 )
             )
+            error_record = {
+                "PartitionKey": record["kinesis"]["partitionKey"],
+                "Data": record["kinesis"]["data"],
+            }
+            # send to Kinesis error stream
+            send_kinesis(kinesis, error_stream_name, error_record)
     app.log.info(
         "received {} records , transformed={}, errors={}, skipped={}".format(
             len(event["Records"]),

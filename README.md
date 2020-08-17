@@ -18,18 +18,14 @@ auto_deploy = true if to ship the zip to S3
 
 **2.1) Using AWS CLI -** 
 ```
-aws lambda create-function --function-name ArcFilterFunction --runtime python3.8 --role admin --handler app.execute --zip-file fileb://deployment.zip  --role "[lambda-kinesis-access-roles]"
+aws lambda create-function --function-name ArcFilterFunction --runtime python3.8  --handler app.execute --zip-file fileb://deployment.zip  --role "[lambda-kinesis-access-roles]"
 
 aws lambda create-event-source-mapping --function-name ArcFilterFunction \
 --event-source  [stream-arn] \
 --batch-size 1 --starting-position LATEST
 
 aws lambda update-function-configuration --function-name ArcFilterFunction \
---environment "Variables={TO_FILTER_PARAMETERS=operation, OUTPUT_STREAM=filtered_cmsfeed}"
-
-aws lambda update-event-source-mapping --uuid d48c8eae-e8ad-408b-a0cb-a125601d30fa \
---maximum-retry-attempts 2  --maximum-record-age-in-seconds 3600 \
---destination-config '{"OnFailure": {"Destination": "arn:aws:sqs:us-east-2:123456789012:dlq"}}'
+--environment "Variables={TO_FILTER_PARAMETERS=[comma seprated parameter names to remove], OUTPUT_STREAM=filtered.cmsfeed, ERROR_STREAM=filter.arc.error}"
 ```
 
 if any code is changed - 
@@ -111,13 +107,16 @@ click on create and then once created click on the **Test Button** to test the l
 
 Expected Log Output - 
 
-`START RequestId: cc014b97-edb3-4c06-b764-46d2311163a8 Version: $LATEST
-ArcFilterFunction - INFO - Total events received: 1
-ArcFilterFunction - INFO - Decoded event with eventId shardId-000000000000:49609560339806358283862413364490677014111167574043525122
-ArcFilterFunction - INFO - Transforming the decoded event with partitionKey dbb36154-59a7-493d-a638-561578ab5b23 to json
-ArcFilterFunction - INFO - Successful processed 1 records , Transformed=0, errors=0, skipped=1
-END RequestId: cc014b97-edb3-4c06-b764-46d2311163a8
-REPORT RequestId: cc014b97-edb3-4c06-b764-46d2311163a8	Duration: 126.69 ms	Billed Duration: 200 ms	Memory Size: 512 MB	Max Memory Used: 69 MB	Init Duration: 519.23 ms	`
+`
+START RequestId: d5308db6-351b-43e4-bf52-7cfebe5534bd Version: $LATEST
+FilterArcEventsApp - INFO - Total events received: 1
+FilterArcEventsApp - INFO - Decoded event with eventId shardId-000000000000:49609560339806358283862413364490677014111167574043525122
+FilterArcEventsApp - INFO - Transforming the decoded event with partitionKey dbb36154-59a7-493d-a638-561578ab5b23 to json
+FilterArcEventsApp - INFO - event received with status PUBLISHED = False. Event will be filtered is PUBLISHED = False
+FilterArcEventsApp - INFO - received 1 records , transformed=0, errors=0, skipped=1
+END RequestId: d5308db6-351b-43e4-bf52-7cfebe5534bd
+REPORT RequestId: d5308db6-351b-43e4-bf52-7cfebe5534bd	Duration: 6.61 ms	Billed Duration: 100 ms	Memory Size: 512 MB	Max Memory Used: 72 MB	
+`
 
 ## Env Variables
 
@@ -168,7 +167,7 @@ awslocal lambda create-event-source-mapping --function-name ArcFilterFunction \
 --batch-size 1 --starting-position LATEST
 
 awslocal lambda update-function-configuration --function-name ArcFilterFunction \
---environment "Variables={TO_FILTER_PARAMETERS=operation, KINESIS_ENDPOINT_URL='http://172.27.0.2:4568', OUTPUT_STREAM=filtered_cmsfeed}"
+--environment "Variables={TO_FILTER_PARAMETERS=operation, KINESIS_ENDPOINT_URL='http://172.19.0.2:4568', OUTPUT_STREAM=filtered_cmsfeed, LOG_LEVEL=DEBUG}"
 ```
 
 if any code is changed - 
