@@ -26,6 +26,10 @@ aws lambda create-event-source-mapping --function-name ArcFilterFunction \
 
 aws lambda update-function-configuration --function-name ArcFilterFunction \
 --environment "Variables={TO_FILTER_PARAMETERS=operation, OUTPUT_STREAM=filtered_cmsfeed}"
+
+aws lambda update-event-source-mapping --uuid d48c8eae-e8ad-408b-a0cb-a125601d30fa \
+--maximum-retry-attempts 2  --maximum-record-age-in-seconds 3600 \
+--destination-config '{"OnFailure": {"Destination": "arn:aws:sqs:us-east-2:123456789012:dlq"}}'
 ```
 
 if any code is changed - 
@@ -122,12 +126,6 @@ kinesis endpoint when testing locally it will be local-stack docker ip which can
 - `docker container inspect localstack_main`
 else by default aws kinesis account ip address, e.g https://kinesis.us-east-1.amazonaws.com
 
-### AWS_ACCESS_KEY_ID
-kinesis aws access key or value as "iam" when using iam user 
-
-### AWS_SECRET_ACCESS_KEY
-kinesis aws secret access key or value as "iam" when using iam user
-
 ### AWS_REGION
 aws kinesis account region, e.g "us-east-1"
 
@@ -138,11 +136,8 @@ or by default its empty ""
 ### OUTPUT_STREAM
 output stream name where filtered events will be stored 
 
-### LOG_LEVEL
-logging level for the application by default INFO
-
 ## run test cases
-`python3 -m unittest tests.arcfeed_cms_filtertest`
+`pytest -v`
 
 ## testing locally
 1) Start the local-stack
@@ -173,7 +168,7 @@ awslocal lambda create-event-source-mapping --function-name ArcFilterFunction \
 --batch-size 1 --starting-position LATEST
 
 awslocal lambda update-function-configuration --function-name ArcFilterFunction \
---environment "Variables={TO_FILTER_PARAMETERS=operation, KINESIS_ENDPOINT_URL='http://172.21.0.2:4568', OUTPUT_STREAM=filtered_cmsfeed}"
+--environment "Variables={TO_FILTER_PARAMETERS=operation, KINESIS_ENDPOINT_URL='http://172.27.0.2:4568', OUTPUT_STREAM=filtered_cmsfeed}"
 ```
 
 if any code is changed - 

@@ -1,6 +1,10 @@
 # Build and test stage
 FROM python:3.8-buster as build
 
+#env variable with default value
+ARG aws_default_region="us-east-1"
+ENV AWS_DEFAULT_REGION=$aws_default_region
+
 # Upgrade pip
 RUN pip install -U pip
 
@@ -9,10 +13,16 @@ WORKDIR /app
 COPY . /app
 
 #install dependencies
-RUN pip install -r requirements.txt
+RUN pip install -r requirements-dev.txt
+
+#check styling
+RUN flake8 app.py
+
+#check formatting
+RUN black .
 
 #run unit tests
-RUN python3 -m unittest tests.arcfeed_cms_filtertest
+RUN py.test -v
 
 #create deployment.zip
 RUN chalice package .
@@ -24,16 +34,12 @@ COPY --from=build /app /app
 
 WORKDIR /app
 
-#env variable with default value
-ARG aws_default_region="us-east-1"
 ARG bucket="arc-cms"
 ARG file_name="ArcEvent_Kinesis_Filter.zip"
 ARG package_path="deployment.zip"
 ARG auto_deploy="false"
 
-
-ENV AWS_DEFAULT_REGION=$aws_default_region \
-  BUCKET=$bucket \
+ENV BUCKET=$bucket \
   FILE_NAME=$file_name \
   PACKAGE_NAME=$package_path \
   AUTO_DEPLOY=$auto_deploy
