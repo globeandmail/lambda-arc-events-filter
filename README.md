@@ -69,6 +69,7 @@ and add at least these variables -
 Key                             value
 **TO_FILTER_PARAMETERS**        operations
 **OUTPUT_STREAM**               filtered_stream
+**ERROR_STREAM**                error_stream
 
 and click on save.
 
@@ -76,6 +77,7 @@ and click on save.
 
 **app.execute** from lambda_function.lambda_handler
 
+increase the mem to 320 MB
 Done and the lambda function is create and active.
 
 **To Test**
@@ -112,7 +114,7 @@ START RequestId: d5308db6-351b-43e4-bf52-7cfebe5534bd Version: $LATEST
 FilterArcEventsApp - INFO - Total events received: 1
 FilterArcEventsApp - INFO - Decoded event with eventId shardId-000000000000:49609560339806358283862413364490677014111167574043525122
 FilterArcEventsApp - INFO - Transforming the decoded event with partitionKey dbb36154-59a7-493d-a638-561578ab5b23 to json
-FilterArcEventsApp - INFO - event received with status PUBLISHED = False. Event will be filtered is PUBLISHED = False
+FilterArcEventsApp - INFO - event received with status PUBLISHED = False. Event will be filtered if PUBLISHED = False
 FilterArcEventsApp - INFO - received 1 records , transformed=0, errors=0, skipped=1
 END RequestId: d5308db6-351b-43e4-bf52-7cfebe5534bd
 REPORT RequestId: d5308db6-351b-43e4-bf52-7cfebe5534bd	Duration: 6.61 ms	Billed Duration: 100 ms	Memory Size: 512 MB	Max Memory Used: 72 MB	

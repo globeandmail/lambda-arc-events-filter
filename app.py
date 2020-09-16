@@ -111,7 +111,7 @@ def execute(event, context):
             app.log.debug("event in json format {}".format(event_data))
             event_published_status = event_data["published"]
             app.log.info(
-                "event received with status PUBLISHED = {}. Event will be filtered is PUBLISHED = False".format(
+                "event received with status PUBLISHED = {}. Event will be filtered if PUBLISHED = False".format(
                     event_published_status
                 )
             )
