@@ -17,9 +17,9 @@ kinesis_endpoint_url = os.environ.get(
 )
 aws_region = os.environ.get("AWS_REGION", "us-east-1")
 
-# using access keys for testing with local stack, on prod it can be provided from env if required
-aws_access_key_id = os.environ.get("AWS_ACCESS_KEY_ID")
-aws_secret_access_key = os.environ.get("AWS_SECRET_ACCESS_KEY")
+# using access keys for testing with local stack
+aws_access_key_id = os.environ.get("AWS_ACCESS_KEY_ID", "")
+aws_secret_access_key = os.environ.get("AWS_SECRET_ACCESS_KEY", "")
 
 # output stream where filtered events are streamed
 output_stream_name = os.environ.get("OUTPUT_STREAM")
@@ -34,8 +34,9 @@ def create_client(service):
     return boto3.client(
         service,
         endpoint_url=kinesis_endpoint_url,
-        aws_access_key_id=aws_access_key_id,
-        aws_secret_access_key=aws_secret_access_key,
+        # un comment this code if testing on local with local stack
+        # aws_access_key_id=aws_access_key_id,
+        # aws_secret_access_key=aws_secret_access_key,
         region_name=aws_region,
     )
 
@@ -131,6 +132,11 @@ def execute(event, context):
                 app.log.debug(
                     "event after removing the specified parameters- {}".format(
                         filtered_event
+                    )
+                )
+                app.log.debug(
+                    "sending event to output stream {} having partition key as - {}".format(
+                        output_stream_name, record["kinesis"]["partitionKey"]
                     )
                 )
                 send_kinesis(kinesis, output_stream_name, output_record)
